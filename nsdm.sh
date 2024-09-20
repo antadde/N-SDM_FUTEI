@@ -93,20 +93,17 @@ echo "Linking focal layers to N-SDM data folder..."
 # ln -s "$FOCAL_OUTPUT_BASE_DIR" "$wp/data/$project/covariates/reg/lulc/agg11" 2>/dev/null
 echo "Focal layers linked."
 
-###############################
-## Core N-SDM script - Species Occurrence Data
-###############################
 # Display welcome message with project and session ID
 echo "Welcome to this new $project run, Session ID: $ssl_id"
 
 # Retrieve memory, time, and cores for pre_A
-pre_A_m=$(get_value "pre_A_m")  # Memory
-pre_A_t=$(get_value "pre_A_t")  # Time
-pre_A_c=$(get_value "pre_A_c")  # Cores
+PRE_A_m=$(get_value "pre_A_m")  # Memory
+PRE_A_t=$(get_value "pre_A_t")  # Time
+PRE_A_c=$(get_value "pre_A_c")  # Cores
 
 # Run the pre_A job
 echo "Starting pre_A job..."
-sbatch --wait --mem-per-cpu="$pre_A_m" --time="$pre_A_t" --cpus-per-task="$pre_A_c" --ntasks=1 ./0_mainPRE/job_pre_A.sh
+sbatch --wait --mem-per-cpu="$PRE_A_m" --time="$PRE_A_t" --cpus-per-task="$PRE_A_c" --ntasks=1 ./0_mainPRE/job_pre_A.sh
 
 # Check the exit status of sbatch command
 if [[ $? -eq 0 ]]; then
@@ -141,10 +138,9 @@ for i in $(seq 1 "$spe_runs"); do
     exit 1
   fi
 
-  # Retrieve the number of species to model in this run
+ # Retrieve the number of species to model in this run
   n_spe="$(cat "$wp/tmp/$project/settings/tmp/n_spe.txt")"
   echo "Number of species to be modeled in this run: $n_spe"
-
 
   # Extract modelling algorithms, nesting methods, scenarios, and periods from settings.csv
   # Helper function to count the number of items in a list (assumes single quotes around items)
@@ -230,15 +226,6 @@ FUT_D_a=$((n_spe * n_nesting))
 
 END_A_a=$n_spe
 
-# Define directories and file patterns to clean
-log_dirs=(
-  "$wp/scripts/$project/main/0_mainPRE"
-  "$wp/scripts/$project/main/1_mainGLO"
-  "$wp/scripts/$project/main/2_mainREG"
-  "$wp/scripts/$project/main/3_mainFUT"
-  "$wp/scripts/$project/main/4_mainEND"
-)
-
 # Define file patterns to clean
 file_patterns=("*.err" "*.out")
 
@@ -262,64 +249,137 @@ if [ "$clear_sop" = "TRUE" ]; then
   fi
 fi
 
-# Start running jobs
-## n_levels of analyses (1=GLO; 2=GLO+REG)?
-n_levels=$(awk -F ";" '$1 == "n_levels" { print $2}' ./settings/settings.csv)
-
-## Do future analyses?
-do_proj=$(awk -F ";" '$1 == "do_proj" { print $2}' ./settings/settings.csv)
+# Retrieve n_levels and do_proj values from settings.csv
+n_levels=$(get_value "n_levels")  # Number of levels of analyses
+do_proj=$(get_value "do_proj")    # Do future analyses?
 
 ## PRE_B
 cd $wp/scripts/$project/main/0_mainPRE
-sbatch --wait --mem-per-cpu=$pre_B_m --time=$pre_B_t --cpus-per-task=$pre_B_c --ntasks=1 job_pre_B.sh
-echo PRE modelling datasets generated
+sbatch --wait --mem-per-cpu=$PRE_B_m --time=$PRE_B_t --cpus-per-task=$PRE_B_c --ntasks=1 job_pre_B.sh
+ # Check the exit status of the sbatch command
+  if [[ $? -eq 0 ]]; then
+    echo "PRE_B achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
 
-## GLO level
+## GLOBAL level
 cd $wp/scripts/$project/main/1_mainGLO
-sbatch --wait --mem-per-cpu=$glo_A_m --time=$glo_A_t --cpus-per-task=$glo_A_c --ntasks=1 --array [1-$glo_A_a] job_glo_A.sh
-echo GLO data preparation and covariate selection done
-sbatch --wait --mem-per-cpu=$glo_B_m --time=$glo_B_t --cpus-per-task=$glo_B_c --ntasks=1 --array [1-$glo_B_a] job_glo_B.sh
-echo GLO modelling done
-sbatch --wait --mem-per-cpu=$glo_C_m --time=$glo_C_t --cpus-per-task=$glo_C_c --ntasks=1 --array [1-$glo_C_a] job_glo_C.sh
+sbatch --wait --mem-per-cpu=$GLO_A_m --time=$GLO_A_t --cpus-per-task=$GLO_A_c --ntasks=1 --array [1-$GLO_A_a] job_glo_A.sh
+  if [[ $? -eq 0 ]]; then
+    echo "GLO_A achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+  
+sbatch --wait --mem-per-cpu=$GLO_B_m --time=$GLO_B_t --cpus-per-task=$GLO_B_c --ntasks=1 --array [1-$GLO_B_a] job_glo_B.sh
+  if [[ $? -eq 0 ]]; then
+    echo "GLO_B achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+  
+sbatch --wait --mem-per-cpu=$GLO_C_m --time=$GLO_C_t --cpus-per-task=$GLO_C_c --ntasks=1 --array [1-$GLO_C_a] job_glo_C.sh
+ # Check the exit status of the sbatch command
+  if [[ $? -eq 0 ]]; then
+    echo "GLO_C achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
 echo GLO ensembling done
 
 if [ $n_levels -gt 1 ]
 then 
-## REG level
+## REGIONAL level
 cd $wp/scripts/$project/main/2_mainREG
-sbatch --wait --mem-per-cpu=$reg_A_m --time=$reg_A_t --cpus-per-task=$reg_A_c --ntasks=1 --array [1-$reg_A_a] job_reg_A.sh
-echo REG data preparation and covariate selection done
-sbatch --wait --mem-per-cpu=$reg_B_m --time=$reg_B_t --cpus-per-task=$reg_B_c --ntasks=1 --array [1-$reg_B_a] job_reg_B.sh
-echo REG modelling done
-sbatch --wait --mem-per-cpu=$reg_C_m --time=$reg_C_t --cpus-per-task=$reg_C_c --ntasks=1 --array [1-$reg_C_a] job_reg_C.sh
-echo REG ensembling and scale nesting done
-fi
+sbatch --wait --mem-per-cpu=$REG_A_m --time=$REG_A_t --cpus-per-task=$REG_A_c --ntasks=1 --array [1-$REG_A_a] job_reg_A.sh
+  if [[ $? -eq 0 ]]; then
+    echo "REG_A achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+  
+sbatch --wait --mem-per-cpu=$REG_B_m --time=$REG_B_t --cpus-per-task=$REG_B_c --ntasks=1 --array [1-$REG_B_a] job_reg_B.sh
+  if [[ $? -eq 0 ]]; then
+    echo "REG_B achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
 
-## FUT projections
+sbatch --wait --mem-per-cpu=$REG_C_m --time=$REG_C_t --cpus-per-task=$REG_C_c --ntasks=1 --array [1-$REG_C_a] job_reg_C.sh
+  if [[ $? -eq 0 ]]; then
+    echo "REG_C achieved successfully."
+  elsee
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+ fi
+
+## FUTURE projections
 if [ $do_proj = "TRUE" ]
 then
 cd $wp/scripts/$project/main/3_mainFUT
-sbatch --wait --mem-per-cpu=$fut_A_m --time=$fut_A_t --cpus-per-task=$fut_A_c --ntasks=1 --array [1-$fut_A_a] job_fut_A.sh
-echo individual FUT GLO predictions done
-sbatch --wait --mem-per-cpu=$fut_B_m --time=$fut_B_t --cpus-per-task=$fut_B_c --ntasks=1 --array [1-$fut_B_a] job_fut_B.sh
-echo FUT GLO ensembling done
+sbatch --wait --mem-per-cpu=$FUT_A_m --time=$FUT_A_t --cpus-per-task=$FUT_A_c --ntasks=1 --array [1-$FUT_A_a] job_fut_A.sh
+  if [[ $? -eq 0 ]]; then
+    echo "FUT_A achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+
+sbatch --wait --mem-per-cpu=$FUT_B_m --time=$FUT_B_t --cpus-per-task=$FUT_B_c --ntasks=1 --array [1-$FUT_B_a] job_fut_B.sh
+  if [[ $? -eq 0 ]]; then
+    echo "FUT_B achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+ 
 if [ $n_levels -gt 1 ]
 then
-sbatch --wait --mem-per-cpu=$fut_C_m --time=$fut_C_t --cpus-per-task=$fut_C_c --ntasks=1 --array [1-$fut_C_a] job_fut_C.sh
-echo individual FUT REG predictions done
-sbatch --wait --mem-per-cpu=$fut_D_m --time=$fut_D_t --cpus-per-task=$fut_D_c --ntasks=1 --array [1-$fut_D_a] job_fut_D.sh
-echo FUT REG ensembling and scale nesting done
+sbatch --wait --mem-per-cpu=$FUT_C_m --time=$FUT_C_t --cpus-per-task=$FUT_C_c --ntasks=1 --array [1-$FUT_C_a] job_fut_C.sh
+  if [[ $? -eq 0 ]]; then
+    echo "FUT_C achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+
+sbatch --wait --mem-per-cpu=$FUT_D_m --time=$FUT_D_t --cpus-per-task=$FUT_D_c --ntasks=1 --array [1-$FUT_D_a] job_fut_D.sh
+  if [[ $? -eq 0 ]]; then
+    echo "FUT_D achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
 fi
 fi
 
 ## END analyses
 cd $wp/scripts/$project/main/4_mainEND
-sbatch --wait --mem-per-cpu=$end_A_m --time=$end_A_t --cpus-per-task=$end_A_c --ntasks=1 --array [1-$end_A_a] job_end_A.sh
-echo Final evaluation done
+sbatch --wait --mem-per-cpu=$end_A_m --time=$end_A_t --cpus-per-task=$end_A_c --ntasks=1 --array [1-$END_A_a] job_end_A.sh
+  if [[ $? -eq 0 ]]; then
+    echo "END_A achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+  
 sacct --starttime $dt -u $own --format JobID,JobName,Elapsed,NCPUs,TotalCPU,CPUTime,ReqMem,MaxRSS,MaxDiskRead,MaxDiskWrite,State,ExitCode > $wp/tmp/$project/sacct/"${ssl_id}_${i}_sacct.txt"
 Rscript end_B.R 1>/dev/null 2>&1
-echo Sacct outputs analysis done
-
+  if [[ $? -eq 0 ]]; then
+    echo "END_B achieved successfully."
+  else
+    echo "Error: sbatch command failed."
+    exit 1
+  fi
+  
 # Permissions
 chmod -R 777 $wp/scripts/$project/main
 
@@ -331,6 +391,9 @@ echo $(awk -F ";" '$1 == "rsync_exclude" { print $2}' $wp/scripts/$project/main/
 rsync -a --exclude-from="$wp/tmp/$project/settings/tmp/exclfiles.txt" $sop/outputs/$project/ $svp/outputs/$project
 echo Main outputs sync to saving location
 done
+
+echo Finished
+
 
 # Aggregations
 cd $wp/scripts/$project/main/5_aggregator/
@@ -383,5 +446,3 @@ EOT
     # Optionally remove the temp script after submission (to avoid clutter)
     rm $sbatch_script
 done
-
-echo Finished
