@@ -1,0 +1,19 @@
+Ready for evaluating ensemble predictions obtained for Lynx lynx ...
+$GLO
+           AUC          AUC_S           RMSE            CBI          Score 
+     0.9383276      0.8766552      0.3189464      0.9999600      0.8707187 
+     threshold maxSensitivity maxSpecificity    maxAccuracy         maxPPV 
+     0.4201426      0.9051945      0.8303464      0.8633370      0.8080054 
+        maxNPV     maxJaccard         maxTSS       maxKappa        maxSEDI 
+     0.9175399      0.7448750      0.7355410      0.7262798      0.8707554 
+
+$COV
+           AUC          AUC_S           RMSE            CBI          Score 
+     0.9653394      0.9306788      0.2780065      0.9988000      0.9062802 
+     threshold maxSensitivity maxSpecificity    maxAccuracy         maxPPV 
+     0.3855849      0.9139671      0.8753947      0.8938884      0.8712831 
+        maxNPV     maxJaccard         maxTSS       maxKappa        maxSEDI 
+     0.9172336      0.8050512      0.7893618      0.7878304      0.9064321 
+
+Nested ensembles evaluated 
+Finished!

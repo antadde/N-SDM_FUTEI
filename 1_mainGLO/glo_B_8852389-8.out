@@ -1,0 +1,43 @@
+Ready for global-level MAX modelling of Achillea millefolium...
+glo_A outputs loaded 
+Modelling parameters defined 
+                     max-1       max-2       max-3
+AUC              0.8436073   0.8362773   0.8318350
+AUC_S            0.6872145   0.6725546   0.6636700
+RMSE             0.4261626   0.4271429   0.4274174
+CBI              0.9979600   0.9980800   0.9987200
+Score            0.7372385   0.7271879   0.7226892
+threshold        0.3032565   0.3236288   0.3382528
+maxSensitivity   0.8055065   0.7855446   0.7790199
+maxSpecificity   0.7210345   0.7253846   0.7266578
+maxAccuracy      0.7623511   0.7548099   0.7522690
+maxPPV           0.7347117   0.7327983   0.7320085
+maxNPV           0.7953087   0.7797649   0.7747471
+maxJaccard       0.6236699   0.6103861   0.6059627
+maxTSS           0.5265410   0.5109292   0.5056777
+maxKappa         0.5254566   0.5101432   0.5049844
+maxSEDI          0.6860479   0.6688639   0.6630398
+user.self        0.0230000   0.0250000   0.0260000
+sys.self         0.0530000   0.0520000   0.0640000
+elapsed         60.7590000  41.6750000  44.7710000
+user.child     217.2760000 233.0370000 194.8050000
+sys.child        8.0030000   8.6360000   8.6070000
+
+
+Models fitted and evaluated 
+Top model max-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.5431907
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.2311841
+5  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.2310306
+4 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.1689825
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.1004750
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4294900 229.4    8423645  449.9   8423645  449.9
+Vcells 44390305 338.7  170824917 1303.3 212017406 1617.6
+Predictions calculated and saved 
+Finished!

@@ -1,0 +1,49 @@
+Ready for regional-level MAX modelling of Achillea millefolium using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                     max-1       max-2       max-3
+AUC              0.9481381   0.9469868   0.9458159
+AUC_S            0.8962762   0.8939737   0.8916318
+RMSE             0.3520610   0.3569154   0.3568371
+CBI              0.9934800   0.9938800   0.9939600
+Score            0.8755316   0.8727747   0.8705071
+threshold        0.1704708   0.1705947   0.1781621
+maxSensitivity   0.8766799   0.8731144   0.8725226
+maxSpecificity   0.8601588   0.8573559   0.8534070
+maxAccuracy      0.8682357   0.8650600   0.8627523
+maxPPV           0.8574144   0.8543899   0.8508557
+maxNPV           0.8797208   0.8762486   0.8752392
+maxJaccard       0.7648567   0.7598041   0.7565692
+maxTSS           0.7368387   0.7304703   0.7259295
+maxKappa         0.7364733   0.7301178   0.7255233
+maxSEDI          0.8702142   0.8655125   0.8621916
+user.self        0.0320000   0.0400000   0.0380000
+sys.self         0.0600000   0.0600000   0.0730000
+elapsed         63.6760000  51.9180000  42.9060000
+user.child     248.2500000 257.8220000 231.3190000
+sys.child        7.0410000   7.4520000   8.1510000
+
+
+Models fitted and evaluated 
+Top model max-1 refitted on full dataset for predictions 
+                                     Covariate Importance
+1                                      mainGLO 1.00000000
+8   reg_topo_alti3d2016_pixel_hillshade_median 0.21881985
+3  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.14671361
+2   ch_lulc_agg11_present_pixel_2018_reg13_200 0.11877952
+11 ch_lulc_agg11_present_pixel_2018_reg18_3000 0.11675080
+4  ch_hydro_gwn07_pixel_dist2riverstrahler_cl4 0.10204157
+10     reg_topo_alti3d2016_pixel_aspect_median 0.09014147
+5  ch_lulc_agg11_present_pixel_2018_reg10_1500 0.07880251
+9  ch_lulc_agg11_present_pixel_2018_reg14_3000 0.07191367
+12 ch_lulc_agg11_present_pixel_2018_reg16_3000 0.05777422
+7  ch_lulc_agg11_present_pixel_2018_reg17_1500 0.05574366
+6   ch_lulc_agg11_present_pixel_2018_reg12_500 0.04400564
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used (Mb)
+Ncells  4275197 228.4    8294475  443.0   8294475  443
+Vcells 72278844 551.5  368790484 2813.7 383777941 2928
+Predictions calculated and saved 
+Finished!

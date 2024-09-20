@@ -1,0 +1,49 @@
+Ready for regional-level RF modelling of Acer campestre using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                      rf-1        rf-2
+AUC              0.9786521   0.9788059
+AUC_S            0.9573042   0.9576118
+RMSE             0.2397497   0.2395500
+CBI              0.9969200   0.9964400
+Score            0.9343446   0.9344437
+threshold        0.4867200   0.4848000
+maxSensitivity   0.9477054   0.9481750
+maxSpecificity   0.9011042   0.9011042
+maxAccuracy      0.9194049   0.9195893
+maxPPV           0.8612239   0.8613424
+maxNPV           0.9639296   0.9642558
+maxJaccard       0.8220216   0.8224423
+maxTSS           0.8488097   0.8492792
+maxKappa         0.8339866   0.8343862
+maxSEDI          0.9419147   0.9422156
+user.self        1.3820000   1.1160000
+sys.self         0.3720000   0.5790000
+elapsed         27.1280000  51.2650000
+user.child     102.6100000 223.1840000
+sys.child        3.5100000   6.7230000
+
+
+Models fitted and evaluated 
+Top model rf-2 refitted on full dataset for predictions 
+                                     Covariate Importance
+1                                      mainGLO 1.00000000
+4  ch_lulc_agg11_present_pixel_2018_reg10_3000 0.19744328
+3  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.19573781
+2       ch_transport_tlm3d_pixel_dist2road_all 0.15441237
+5  ch_lulc_agg11_present_pixel_2018_reg17_1500 0.13665455
+7  ch_lulc_agg11_present_pixel_2018_reg18_3000 0.07566678
+8     reg_topo_alti3d2016_pixel_hillshade_mean 0.07323557
+9        reg_topo_alti3d2016_pixel_aspect_mean 0.07011228
+12 ch_hydro_gwn07_pixel_dist2riverstrahler_cl4 0.06063592
+10          ch_hydro_gwn07_pixel_dist2lake_all 0.06027002
+11 ch_lulc_agg11_present_pixel_2018_reg12_3000 0.04791114
+6   ch_lulc_agg11_present_pixel_2018_reg13_200 0.04780478
+
+
+Variable importance scores and response curves computed 
+            used   (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4267928  228.0    8284098  442.5   8284098  442.5
+Vcells 332373439 2535.9  841878663 6423.1 838355683 6396.2
+Predictions calculated and saved 
+Finished!

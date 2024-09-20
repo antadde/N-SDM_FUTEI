@@ -1,0 +1,49 @@
+Ready for regional-level RF modelling of Achillea millefolium using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                      rf-1        rf-2
+AUC              0.9619291   0.9620278
+AUC_S            0.9238582   0.9240556
+RMSE             0.2808406   0.2807104
+CBI              0.9990400   0.9991600
+Score            0.9033414   0.9035286
+threshold        0.4830400   0.4848400
+maxSensitivity   0.8992422   0.8978708
+maxSpecificity   0.8878840   0.8894995
+maxAccuracy      0.8934368   0.8935921
+maxPPV           0.8848988   0.8863759
+maxNPV           0.9022983   0.9013543
+maxJaccard       0.8049065   0.8049015
+maxTSS           0.7871262   0.7873703
+maxKappa         0.7868446   0.7871424
+maxSEDI          0.9044915   0.9047398
+user.self        1.4870000   1.7800000
+sys.self         0.5110000   0.8510000
+elapsed         37.7550000  69.9610000
+user.child     142.0080000 312.8650000
+sys.child        4.4340000   8.4090000
+
+
+Models fitted and evaluated 
+Top model rf-2 refitted on full dataset for predictions 
+                                     Covariate Importance
+1                                      mainGLO 1.00000000
+7  ch_lulc_agg11_present_pixel_2018_reg17_1500 0.15189528
+8   reg_topo_alti3d2016_pixel_hillshade_median 0.14619407
+10     reg_topo_alti3d2016_pixel_aspect_median 0.13054423
+4  ch_hydro_gwn07_pixel_dist2riverstrahler_cl4 0.12560262
+5  ch_lulc_agg11_present_pixel_2018_reg10_1500 0.11396815
+2   ch_lulc_agg11_present_pixel_2018_reg13_200 0.10823746
+3  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.09380648
+6   ch_lulc_agg11_present_pixel_2018_reg12_500 0.08432644
+9  ch_lulc_agg11_present_pixel_2018_reg14_3000 0.06931582
+12 ch_lulc_agg11_present_pixel_2018_reg16_3000 0.06852160
+11 ch_lulc_agg11_present_pixel_2018_reg18_3000 0.04703944
+
+
+Variable importance scores and response curves computed 
+            used   (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4270916  228.1    8290233  442.8   8290233  442.8
+Vcells 499652112 3812.1  972511754 7419.7 971502506 7412.0
+Predictions calculated and saved 
+Finished!

@@ -1,0 +1,44 @@
+Ready for global-level GAM modelling of Acer campestre...
+glo_A outputs loaded 
+Modelling parameters defined 
+                    gam-1       gam-2       gam-3
+AUC             0.9325703   0.9261626   0.9272343
+AUC_S           0.8651405   0.8523253   0.8544685
+RMSE            0.3193584   0.3276261   0.3255412
+CBI             0.9980400   0.9948000   0.9965200
+Score           0.8580542   0.8483750   0.8521275
+threshold       0.4220588   0.4871428   0.4883671
+maxSensitivity  0.9168823   0.8951724   0.8918017
+maxSpecificity  0.7940999   0.8028273   0.8135922
+maxAccuracy     0.8491654   0.8442423   0.8486676
+maxPPV          0.7838291   0.7873058   0.7958852
+maxNPV          0.9218932   0.9044574   0.9028358
+maxJaccard      0.7316119   0.7204697   0.7254568
+maxTSS          0.7109822   0.6979997   0.7053938
+maxKappa        0.6998647   0.6891507   0.6975102
+maxSEDI         0.8556227   0.8434518   0.8484849
+user.self       0.5490000   0.5610000   0.4810000
+sys.self        0.1810000   0.1280000   0.2350000
+elapsed         7.9670000  66.1910000  73.7700000
+user.child     26.0350000 277.6230000 359.0960000
+sys.child       1.5290000   3.0570000   2.3390000
+
+
+Models fitted and evaluated 
+Top model gam-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1 1.00000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4 0.81104961
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio2 0.43889476
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio15 0.42158929
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio3 0.36429658
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio12 0.17703361
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio8 0.06394128
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4539060 242.5    8664902  462.8   8664902  462.8
+Vcells 110986182 846.8  320720903 2447.0 320060244 2441.9
+Predictions calculated and saved 
+Finished!

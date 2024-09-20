@@ -1,0 +1,49 @@
+Ready for regional-level MAX modelling of Lynx lynx using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                     max-1       max-2       max-3
+AUC              0.9572059   0.9555690   0.9538595
+AUC_S            0.9144118   0.9111379   0.9077189
+RMSE             0.3527231   0.3538393   0.3551877
+CBI              0.9912400   0.9914400   0.9899600
+Score            0.8866250   0.8845084   0.8812552
+threshold        0.1239736   0.1318448   0.1327447
+maxSensitivity   0.8854192   0.8823503   0.8833084
+maxSpecificity   0.8688039   0.8685970   0.8627784
+maxAccuracy      0.8767701   0.8751911   0.8726216
+maxPPV           0.8618312   0.8611313   0.8560698
+maxNPV           0.8921225   0.8893654   0.8895389
+maxJaccard       0.7749836   0.7721828   0.7687841
+maxTSS           0.7542230   0.7509473   0.7460867
+maxKappa         0.7533934   0.7502078   0.7451401
+maxSEDI          0.8826750   0.8802387   0.8769115
+user.self        0.0460000   0.0550000   0.0360000
+sys.self         0.0770000   0.0600000   0.0680000
+elapsed         81.1750000  54.1130000  47.8050000
+user.child     351.6150000 317.2840000 259.9650000
+sys.child        7.2130000   9.1060000   8.4300000
+
+
+Models fitted and evaluated 
+Top model max-1 refitted on full dataset for predictions 
+                                     Covariate  Importance
+1                                      mainGLO 1.000000000
+4  ch_lulc_agg11_present_pixel_2018_reg17_3000 0.271887218
+3  ch_lulc_agg11_present_pixel_2018_reg13_3000 0.214063066
+5  ch_lulc_agg11_present_pixel_2018_reg14_1500 0.144669615
+2  ch_lulc_agg11_present_pixel_2018_reg16_3000 0.121809325
+11 ch_lulc_agg11_present_pixel_2018_reg12_3000 0.120648989
+9         reg_topo_alti3d2016_pixel_slope_mean 0.095390975
+7           ch_hydro_gwn07_pixel_dist2lake_cl1 0.079637196
+6  ch_lulc_agg11_present_pixel_2018_reg10_3000 0.056757658
+10 ch_lulc_agg11_present_pixel_2018_reg18_3000 0.051098800
+8  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.050758153
+12 ch_lulc_agg11_present_pixel_2018_reg19_1500 0.005542593
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4273905 228.3    8291005  442.8   8291005  442.8
+Vcells 72169039 550.7  368552373 2811.9 383598172 2926.7
+Predictions calculated and saved 
+Finished!

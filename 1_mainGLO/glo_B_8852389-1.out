@@ -1,0 +1,44 @@
+Ready for global-level GLM modelling of Acer campestre...
+glo_A outputs loaded 
+Modelling parameters defined 
+                   glm-1
+AUC            0.9274686
+AUC_S          0.8549373
+RMSE           0.3259390
+CBI            0.9960800
+Score          0.8510841
+threshold      0.4929356
+maxSensitivity 0.8885207
+maxSpecificity 0.8137143
+maxAccuracy    0.8472850
+maxPPV         0.7954605
+maxNPV         0.8998670
+maxJaccard     0.7230807
+maxTSS         0.7022350
+maxKappa       0.6946692
+maxSEDI        0.8457028
+user.self      1.5280000
+sys.self       0.2900000
+elapsed        3.2080000
+user.child     1.9790000
+sys.child      0.6610000
+
+
+Models fitted and evaluated 
+Top model glm-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.6817208
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.3617266
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio2  0.2508427
+2 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.2336969
+5  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.2007037
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.1272887
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4341277 231.9    8466980  452.2   8466980  452.2
+Vcells 94348440 719.9  284970579 2174.2 284932699 2173.9
+Predictions calculated and saved 
+Finished!

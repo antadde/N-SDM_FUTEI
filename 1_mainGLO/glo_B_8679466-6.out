@@ -1,0 +1,43 @@
+Ready for global-level GLM modelling of Achillea millefolium...
+glo_A outputs loaded 
+Modelling parameters defined 
+                   glm-1
+AUC            0.8224388
+AUC_S          0.6448777
+RMSE           0.4143188
+CBI            0.9996800
+Score          0.7126939
+threshold      0.5265071
+maxSensitivity 0.7563983
+maxSpecificity 0.7371258
+maxAccuracy    0.7465571
+maxPPV         0.7340212
+maxNPV         0.7595784
+maxJaccard     0.5935720
+maxTSS         0.4935241
+maxKappa       0.4932100
+maxSEDI        0.6494651
+user.self      2.3550000
+sys.self       0.3300000
+elapsed        3.9920000
+user.child     0.8080000
+sys.child      0.3730000
+
+
+Models fitted and evaluated 
+Top model glm-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+5  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.7006792
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.5254684
+2 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.4009443
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.3730825
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.3536235
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4341333 231.9    8469853  452.4   8469853  452.4
+Vcells 89716332 684.5  263503395 2010.4 263503395 2010.4
+Predictions calculated and saved 
+Finished!

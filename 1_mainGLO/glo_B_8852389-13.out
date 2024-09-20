@@ -1,0 +1,44 @@
+Ready for global-level MAX modelling of Lynx lynx...
+glo_A outputs loaded 
+Modelling parameters defined 
+                     max-1       max-2       max-3
+AUC              0.9150440   0.9103312   0.9074346
+AUC_S            0.8300880   0.8206624   0.8148691
+RMSE             0.3918437   0.3887754   0.3853536
+CBI              0.9973600   0.9976400   0.9980400
+Score            0.8334546   0.8266660   0.8224478
+threshold        0.1799740   0.2142827   0.2359382
+maxSensitivity   0.8801935   0.8672135   0.8642019
+maxSpecificity   0.7927224   0.7944821   0.7902324
+maxAccuracy      0.8313090   0.8265665   0.8228630
+maxPPV           0.7703733   0.7692959   0.7649858
+maxNPV           0.8936203   0.8836216   0.8806982
+maxJaccard       0.6971159   0.6880697   0.6827685
+maxTSS           0.6729159   0.6616955   0.6544343
+maxKappa         0.6629462   0.6529295   0.6456054
+maxSEDI          0.8226726   0.8126433   0.8065060
+user.self        0.0340000   0.0170000   0.0320000
+sys.self         0.0330000   0.0640000   0.0490000
+elapsed         65.9950000  59.5590000  54.7280000
+user.child     242.0680000 245.5020000 198.1400000
+sys.child        6.1130000   8.9950000  11.3450000
+
+
+Models fitted and evaluated 
+Top model max-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+3  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.5634353
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.4326340
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.2502969
+4 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.2413487
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.2281279
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio9  0.1177878
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4292283 229.3    8417375  449.6   8417375  449.6
+Vcells 48502279 370.1  196988989 1503.0 205130197 1565.1
+Predictions calculated and saved 
+Finished!

@@ -1,0 +1,43 @@
+Ready for global-level RF modelling of Achillea millefolium...
+glo_A outputs loaded 
+Modelling parameters defined 
+                      rf-1        rf-2
+AUC              0.8961788   0.8963691
+AUC_S            0.7923576   0.7927382
+RMSE             0.3599261   0.3597565
+CBI              0.9998400   0.9998000
+Score            0.8084630   0.8087264
+threshold        0.4695200   0.4651200
+maxSensitivity   0.8558199   0.8584866
+maxSpecificity   0.7773714   0.7751543
+maxAccuracy      0.8157614   0.8159342
+maxPPV           0.7867705   0.7855798
+maxNPV           0.8494488   0.8514045
+maxJaccard       0.6944541   0.6953194
+maxTSS           0.6331913   0.6336409
+maxKappa         0.6320319   0.6324150
+maxSEDI          0.7883513   0.7889020
+user.self        2.9480000   2.3450000
+sys.self         0.9820000   3.2560000
+elapsed         62.4850000 120.8090000
+user.child     243.2480000 515.0620000
+sys.child        8.3330000  38.0470000
+
+
+Models fitted and evaluated 
+Top model rf-2 refitted on full dataset for predictions 
+                                          Covariate Importance
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  1.0000000
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  0.8833025
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.7085723
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.6865085
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.6553492
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.6462641
+
+
+Variable importance scores and response curves computed 
+             used   (Mb) gc trigger    (Mb)   max used    (Mb)
+Ncells    4286785  229.0    8419427   449.7    8419427   449.7
+Vcells 1121360947 8555.4 1840042770 14038.5 1816099582 13855.8
+Predictions calculated and saved 
+Finished!

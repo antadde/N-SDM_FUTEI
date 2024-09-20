@@ -1,0 +1,44 @@
+Ready for global-level GAM modelling of Lynx lynx...
+glo_A outputs loaded 
+Modelling parameters defined 
+                    gam-1       gam-2       gam-3
+AUC             0.9081101   0.8957033   0.9014427
+AUC_S           0.8162202   0.7914067   0.8028855
+RMSE            0.3474685   0.3600519   0.3542352
+CBI             0.9998800   0.9986800   0.9977600
+Score           0.8277453   0.8124532   0.8178501
+threshold       0.4118214   0.4916054   0.4447590
+maxSensitivity  0.8931062   0.8610305   0.8793859
+maxSpecificity  0.7740295   0.7862423   0.7735190
+maxAccuracy     0.8265146   0.8192065   0.8201817
+maxPPV          0.7570607   0.7605648   0.7539891
+maxNPV          0.9019338   0.8777933   0.8908306
+maxJaccard      0.6941067   0.6773459   0.6830969
+maxTSS          0.6671357   0.6472728   0.6529049
+maxKappa        0.6546689   0.6383379   0.6415867
+maxSEDI         0.8196432   0.8003210   0.8068924
+user.self       1.1760000   0.9750000   1.0350000
+sys.self        0.3080000   0.2620000   0.2610000
+elapsed        16.0250000  76.5170000  76.7610000
+user.child     52.7490000 332.3170000 379.1300000
+sys.child       3.0780000   4.3980000   3.2730000
+
+
+Models fitted and evaluated 
+Top model gam-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.7822734
+3  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.5272190
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.5111948
+4 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.4097321
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.2839703
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio9  0.1953726
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4538420 242.4    8663303  462.7   8663303  462.7
+Vcells 110189093 840.7  319242257 2435.7 319204551 2435.4
+Predictions calculated and saved 
+Finished!

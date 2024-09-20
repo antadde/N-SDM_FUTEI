@@ -1,0 +1,6 @@
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2050/1009/reg14/ch_lulc_agg11_future_pixel_2050_1009_reg14_1500.rds
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2040/1009/reg17/ch_lulc_agg11_future_pixel_2040_1009_reg17_1500.rds
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2045/1009/reg15/ch_lulc_agg11_future_pixel_2045_1009_reg15_3000.rds
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2055/1009/reg12/ch_lulc_agg11_future_pixel_2055_1009_reg12_3000.rds
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2035/1009/reg17/ch_lulc_agg11_future_pixel_2035_1009_reg17_3000.rds
+/cluster/work/eawag/p01002/Future-EI-Output/1080_configs/focal_output/ch/lulc/agg11/future/pixel/2060/1009/reg11/ch_lulc_agg11_future_pixel_2060_1009_reg11_1500.rds

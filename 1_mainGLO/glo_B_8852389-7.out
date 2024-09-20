@@ -1,0 +1,43 @@
+Ready for global-level GAM modelling of Achillea millefolium...
+glo_A outputs loaded 
+Modelling parameters defined 
+                    gam-1       gam-2       gam-3
+AUC             0.8343858   0.8183485   0.8221523
+AUC_S           0.6687716   0.6366969   0.6443047
+RMSE            0.4057628   0.4166458   0.4137712
+CBI             0.9995600   0.9992000   0.9988800
+Score           0.7300723   0.7084025   0.7125927
+threshold       0.4759347   0.5155454   0.5090435
+maxSensitivity  0.8145247   0.7707429   0.7714701
+maxSpecificity  0.7073607   0.7185676   0.7231233
+maxAccuracy     0.7597764   0.7440874   0.7467706
+maxPPV          0.7272706   0.7239300   0.7274411
+maxNPV          0.7996651   0.7660437   0.7678086
+maxJaccard      0.6237911   0.5956494   0.5984006
+maxTSS          0.5218854   0.4893105   0.4945935
+maxKappa        0.5205515   0.4886371   0.4939558
+maxSEDI         0.6819389   0.6452881   0.6509847
+user.self       1.1520000   1.1200000   0.9550000
+sys.self        0.3670000   0.3130000   0.3030000
+elapsed        11.4840000  56.5030000  58.6840000
+user.child     41.8900000 239.2560000 296.4980000
+sys.child       4.1790000   3.8700000   3.5170000
+
+
+Models fitted and evaluated 
+Top model gam-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.8641860
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.6474184
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.5119593
+4 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.4391442
+5  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.4352547
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4534926 242.2    8663447  462.7   8663447  462.7
+Vcells 106793145 814.8  280581907 2140.7 280581907 2140.7
+Predictions calculated and saved 
+Finished!

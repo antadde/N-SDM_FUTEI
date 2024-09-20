@@ -1,0 +1,44 @@
+Ready for global-level RF modelling of Acer campestre...
+glo_A outputs loaded 
+Modelling parameters defined 
+                      rf-1        rf-2
+AUC              0.9522900   0.9524114
+AUC_S            0.9045799   0.9048229
+RMSE             0.2899158   0.2897911
+CBI              0.9989200   0.9992800
+Score            0.8924450   0.8928294
+threshold        0.4192000   0.4164400
+maxSensitivity   0.9214364   0.9226444
+maxSpecificity   0.8523987   0.8517409
+maxAccuracy      0.8833806   0.8835601
+maxPPV           0.8357828   0.8352821
+maxNPV           0.9303685   0.9312626
+maxJaccard       0.7800299   0.7805149
+maxTSS           0.7738351   0.7743852
+maxKappa         0.7665213   0.7669217
+maxSEDI          0.8973643   0.8977599
+user.self        5.2310000   2.6730000
+sys.self         1.4050000   2.6300000
+elapsed         82.2900000 135.9030000
+user.child     289.1360000 606.6460000
+sys.child       14.7100000  42.5570000
+
+
+Models fitted and evaluated 
+Top model rf-2 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.6522278
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.6260172
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.4565734
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.3454500
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.2909716
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio2  0.2487181
+
+
+Variable importance scores and response curves computed 
+            used   (Mb) gc trigger    (Mb)   max used    (Mb)
+Ncells   4284538  228.9    8447367   451.2    8447367   451.2
+Vcells 757071371 5776.0 1650067312 12589.1 1649495239 12584.7
+Predictions calculated and saved 
+Finished!

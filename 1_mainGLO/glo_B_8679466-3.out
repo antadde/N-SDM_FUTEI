@@ -1,0 +1,44 @@
+Ready for global-level MAX modelling of Acer campestre...
+glo_A outputs loaded 
+Modelling parameters defined 
+                     max-1       max-2       max-3
+AUC              0.9327118   0.9293038   0.9270972
+AUC_S            0.8654237   0.8586075   0.8541944
+RMSE             0.3818693   0.3809916   0.3800283
+CBI              0.9939600   0.9910000   0.9933600
+Score            0.8556402   0.8493692   0.8465188
+threshold        0.1655214   0.1711840   0.1924349
+maxSensitivity   0.8960620   0.8968211   0.8803346
+maxSpecificity   0.8114750   0.8016791   0.8116675
+maxAccuracy      0.8494107   0.8443485   0.8424634
+maxPPV           0.7947979   0.7866405   0.7920646
+maxNPV           0.9061143   0.9058523   0.8933799
+maxJaccard       0.7273813   0.7209367   0.7147457
+maxTSS           0.7075371   0.6985002   0.6920021
+maxKappa         0.6991849   0.6894420   0.6848428
+maxSEDI          0.8504811   0.8441629   0.8375567
+user.self        0.0380000   0.0320000   0.0420000
+sys.self         0.0650000   0.0620000   0.0530000
+elapsed         99.1450000  78.6210000  67.1310000
+user.child     444.5240000 442.9940000 383.1940000
+sys.child        7.3590000  10.2140000   6.3370000
+
+
+Models fitted and evaluated 
+Top model max-1 refitted on full dataset for predictions 
+                                          Covariate Importance
+1  ch_bioclim_chclim25_present_pixel_1981_2010_bio1  1.0000000
+2  ch_bioclim_chclim25_present_pixel_1981_2010_bio4  0.7481967
+4  ch_bioclim_chclim25_present_pixel_1981_2010_bio3  0.4367323
+6  ch_bioclim_chclim25_present_pixel_1981_2010_bio2  0.3748158
+5 ch_bioclim_chclim25_present_pixel_1981_2010_bio12  0.2537143
+3 ch_bioclim_chclim25_present_pixel_1981_2010_bio15  0.1693323
+7  ch_bioclim_chclim25_present_pixel_1981_2010_bio8  0.0366511
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4292100 229.3    8418068  449.6   8418068  449.6
+Vcells 48518984 370.2  201333546 1536.1 251143579 1916.1
+Predictions calculated and saved 
+Finished!

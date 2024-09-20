@@ -1,0 +1,49 @@
+Ready for regional-level GLM modelling of Acer campestre using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                   glm-1
+AUC            0.9595320
+AUC_S          0.9190640
+RMSE           0.2746199
+CBI            0.9905000
+Score          0.8682341
+threshold      0.5112367
+maxSensitivity 0.9426254
+maxSpecificity 0.8127122
+maxAccuracy    0.8637301
+maxPPV         0.8045425
+maxNPV         0.9567935
+maxJaccard     0.7629261
+maxTSS         0.7553376
+maxKappa       0.7401560
+maxSEDI        0.8532550
+user.self      0.7550000
+sys.self       0.2170000
+elapsed        2.1850000
+user.child     1.7110000
+sys.child      0.7920000
+
+
+Models fitted and evaluated 
+Top model glm-1 refitted on full dataset for predictions 
+                                     Covariate Importance
+10                                     mainGLO  1.0000000
+9       ch_transport_tlm3d_pixel_dist2road_all  0.3772337
+5   ch_lulc_agg11_present_pixel_2018_reg13_200  0.3733616
+6  ch_lulc_agg11_present_pixel_2018_reg15_3000  0.3604093
+8  ch_lulc_agg11_present_pixel_2018_reg18_3000  0.3266989
+1           ch_hydro_gwn07_pixel_dist2lake_all  0.2642609
+12    reg_topo_alti3d2016_pixel_hillshade_mean  0.2200922
+11       reg_topo_alti3d2016_pixel_aspect_mean  0.1824663
+4  ch_lulc_agg11_present_pixel_2018_reg12_3000  0.1496724
+3  ch_lulc_agg11_present_pixel_2018_reg10_3000  0.1313682
+7  ch_lulc_agg11_present_pixel_2018_reg17_1500  0.1154622
+2  ch_hydro_gwn07_pixel_dist2riverstrahler_cl4  0.1072848
+
+
+Variable importance scores and response curves computed 
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  4334374 231.5    8350855  446.0   8350855  446.0
+Vcells 99787686 761.4  411028304 3135.9 428087816 3266.1
+Predictions calculated and saved 
+Finished!

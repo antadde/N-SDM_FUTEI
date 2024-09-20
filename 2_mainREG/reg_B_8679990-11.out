@@ -1,0 +1,49 @@
+Ready for regional-level GLM modelling of Lynx lynx using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                   glm-1
+AUC            0.9504676
+AUC_S          0.9009351
+RMSE           0.3000001
+CBI            0.9949200
+Score          0.8814343
+threshold      0.5091645
+maxSensitivity 0.8795060
+maxSpecificity 0.8689417
+maxAccuracy    0.8740068
+maxPPV         0.8609807
+maxNPV         0.8869871
+maxJaccard     0.7699272
+maxTSS         0.7484477
+maxKappa       0.7478034
+maxSEDI        0.8784205
+user.self      0.8170000
+sys.self       0.2530000
+elapsed        2.1890000
+user.child     2.9180000
+sys.child      1.6000000
+
+
+Models fitted and evaluated 
+Top model glm-1 refitted on full dataset for predictions 
+                                     Covariate Importance
+11                                     mainGLO 1.00000000
+7  ch_lulc_agg11_present_pixel_2018_reg16_3000 0.44313019
+12        reg_topo_alti3d2016_pixel_slope_mean 0.29413098
+8  ch_lulc_agg11_present_pixel_2018_reg17_3000 0.28404164
+9  ch_lulc_agg11_present_pixel_2018_reg18_3000 0.24344699
+4  ch_lulc_agg11_present_pixel_2018_reg13_3000 0.19931197
+3  ch_lulc_agg11_present_pixel_2018_reg12_3000 0.16455238
+6  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.12097067
+5  ch_lulc_agg11_present_pixel_2018_reg14_1500 0.11364839
+2  ch_lulc_agg11_present_pixel_2018_reg10_3000 0.07672501
+10 ch_lulc_agg11_present_pixel_2018_reg19_1500 0.06153698
+1           ch_hydro_gwn07_pixel_dist2lake_cl1 0.04225863
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4337219 231.7    8354329  446.2   8354329  446.2
+Vcells 105015443 801.3  410917407 3135.1 426858310 3256.7
+Predictions calculated and saved 
+Finished!

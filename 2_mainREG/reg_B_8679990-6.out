@@ -1,0 +1,49 @@
+Ready for regional-level GLM modelling of Achillea millefolium using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                   glm-1
+AUC            0.9409344
+AUC_S          0.8818688
+RMSE           0.3138109
+CBI            0.9945200
+Score          0.8642849
+threshold      0.4667994
+maxSensitivity 0.8727102
+maxSpecificity 0.8437556
+maxAccuracy    0.8579111
+maxPPV         0.8429515
+maxNPV         0.8744251
+maxJaccard     0.7501754
+maxTSS         0.7164658
+maxKappa       0.7159083
+maxSEDI        0.8554914
+user.self      0.5400000
+sys.self       0.2470000
+elapsed        1.7520000
+user.child     1.0990000
+sys.child      0.7270000
+
+
+Models fitted and evaluated 
+Top model glm-1 refitted on full dataset for predictions 
+                                     Covariate Importance
+10                                     mainGLO 1.00000000
+4   ch_lulc_agg11_present_pixel_2018_reg13_200 0.44330433
+12  reg_topo_alti3d2016_pixel_hillshade_median 0.37216741
+7  ch_lulc_agg11_present_pixel_2018_reg16_3000 0.28216862
+5  ch_lulc_agg11_present_pixel_2018_reg14_3000 0.27378225
+11     reg_topo_alti3d2016_pixel_aspect_median 0.24924621
+6  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.17704833
+1  ch_hydro_gwn07_pixel_dist2riverstrahler_cl4 0.17646818
+9  ch_lulc_agg11_present_pixel_2018_reg18_3000 0.15685872
+3   ch_lulc_agg11_present_pixel_2018_reg12_500 0.08737741
+2  ch_lulc_agg11_present_pixel_2018_reg10_1500 0.05056176
+8  ch_lulc_agg11_present_pixel_2018_reg17_1500 0.04174976
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4337362 231.7    8356649  446.3   8356649  446.3
+Vcells 105632725 806.0  411875604 3142.4 428787006 3271.4
+Predictions calculated and saved 
+Finished!

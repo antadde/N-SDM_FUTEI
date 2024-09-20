@@ -1,0 +1,49 @@
+Ready for regional-level GAM modelling of Acer campestre using the covariate method for scale-nesting ...
+reg_A outputs loaded 
+Modelling parameters defined 
+                    gam-1       gam-2       gam-3
+AUC             0.9749277   0.9720162   0.9738511
+AUC_S           0.9498555   0.9440325   0.9477021
+RMSE            0.2563957   0.2637850   0.2591313
+CBI             0.9926400   0.9924800   0.9907600
+Score           0.9259985   0.9201942   0.9236160
+threshold       0.5764596   0.5405584   0.5338018
+maxSensitivity  0.9333191   0.9332764   0.9399360
+maxSpecificity  0.9021808   0.8907937   0.8924500
+maxAccuracy     0.9144091   0.9074769   0.9110981
+maxPPV          0.8607723   0.8470084   0.8497915
+maxNPV          0.9544770   0.9538871   0.9583357
+maxJaccard      0.8107361   0.7984925   0.8059519
+maxTSS          0.8354999   0.8240701   0.8323859
+maxKappa        0.8232143   0.8094796   0.8170621
+maxSEDI         0.9340396   0.9277685   0.9326935
+user.self       0.4930000   0.0890000   0.3930000
+sys.self        0.1860000   0.0980000   0.1430000
+elapsed        21.0800000  29.7020000  62.1720000
+user.child     85.7800000 133.9670000 273.4390000
+sys.child       2.6260000   2.9320000   2.8060000
+
+
+Models fitted and evaluated 
+Top model gam-1 refitted on full dataset for predictions 
+                                     Covariate Importance
+1                                      mainGLO 1.00000000
+2       ch_transport_tlm3d_pixel_dist2road_all 0.12725648
+3  ch_lulc_agg11_present_pixel_2018_reg15_3000 0.10073905
+6   ch_lulc_agg11_present_pixel_2018_reg13_200 0.07066698
+7  ch_lulc_agg11_present_pixel_2018_reg18_3000 0.06893558
+8     reg_topo_alti3d2016_pixel_hillshade_mean 0.05185986
+10          ch_hydro_gwn07_pixel_dist2lake_all 0.04214508
+4  ch_lulc_agg11_present_pixel_2018_reg10_3000 0.03412546
+9        reg_topo_alti3d2016_pixel_aspect_mean 0.03351123
+5  ch_lulc_agg11_present_pixel_2018_reg17_1500 0.02102564
+11 ch_lulc_agg11_present_pixel_2018_reg12_3000 0.01836443
+12 ch_hydro_gwn07_pixel_dist2riverstrahler_cl4 0.01658603
+
+
+Variable importance scores and response curves computed 
+            used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells   4553248 243.2    8569734  457.7   8569734  457.7
+Vcells 109916218 838.6  347284437 2649.6 434076351 3311.8
+Predictions calculated and saved 
+Finished!
