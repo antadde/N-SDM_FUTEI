@@ -1,59 +1,60 @@
-# Project name
-project<-gsub("/main","",gsub(".*scripts/","",getwd()))
+# # Project name
+# project<-gsub("/main","",gsub(".*scripts/","",getwd()))
 
-# Set permissions for new files
-Sys.umask(mode="000")
+# # Set permissions for new files
+# Sys.umask(mode="000")
 
-# Load and retrieve main settings
-settings<-read.csv2("./settings/settings.csv")
-parameters<-settings$parameter
-values<-settings$value
-for(i in 1:length(parameters)){
-if(grepl(pattern="NULL", values[i])){
-do.call("<-",list(parameters[i], NULL))
-} else {
-if(grepl(pattern=paste0(c("c\\('|paste", ":20"), collapse="|"), values[i])){
-do.call("<-",list(parameters[i], eval(parse(text=values[i]))))
-} else {
- if(is.na(as.numeric(values[i]))) {
-do.call("<-",list(parameters[i], values[i]))
- } else {
-do.call("<-",list(parameters[i], as.numeric(values[i])))
-}
-}
-}
-}
+# # Load and retrieve main settings
+# settings<-read.csv2("./settings/settings.csv")
+# parameters<-settings$parameter
+# values<-settings$value
+# for(i in 1:length(parameters)){
+# if(grepl(pattern="NULL", values[i])){
+# do.call("<-",list(parameters[i], NULL))
+# } else {
+# if(grepl(pattern=paste0(c("c\\('|paste", ":20"), collapse="|"), values[i])){
+# do.call("<-",list(parameters[i], eval(parse(text=values[i]))))
+# } else {
+ # if(is.na(as.numeric(values[i]))) {
+# do.call("<-",list(parameters[i], values[i]))
+ # } else {
+# do.call("<-",list(parameters[i], as.numeric(values[i])))
+# }
+# }
+# }
+# }
 
-# Additional settings
-ssl_id<-readLines(paste0(w_path,"tmp/",project,"/settings/tmp/ssl_id.txt"))
-cov_path<-paste0(w_path,"data/",project,"/covariates/")
-spe_glo<-list.files(paste0(w_path,"data/",project,"/species/glo"), full.names=T, pattern=".rds")
-if(n_levels>1) spe_reg<-list.files(paste0(w_path,"data/",project,"/species/reg"), full.names=T, pattern=".rds")
-param_grid<-paste0(w_path,"scripts/",project,"/main/settings/", param_grid)
-if(length(expert_table)>0) expert_table<-paste0(w_path,"scripts/",project,"/main/settings/", expert_table)
-if(length(forced_species)>0) forced_species<-paste0(w_path,"scripts/",project,"/main/settings/", forced_species)
+# # Additional settings
+# ssl_id<-readLines(paste0(w_path,"tmp/",project,"/settings/tmp/ssl_id.txt"))
+# cov_path<-paste0(w_path,"data/",project,"/covariates/")
+# spe_glo<-list.files(paste0(w_path,"data/",project,"/species/glo"), full.names=T, pattern=".rds")
+# if(n_levels>1) spe_reg<-list.files(paste0(w_path,"data/",project,"/species/reg"), full.names=T, pattern=".rds")
+# param_grid<-paste0(w_path,"scripts/",project,"/main/settings/", param_grid)
+# if(length(expert_table)>0) expert_table<-paste0(w_path,"scripts/",project,"/main/settings/", expert_table)
+# if(length(forced_species)>0) forced_species<-paste0(w_path,"scripts/",project,"/main/settings/", forced_species)
 
-# Check and refine masks
-if(n_levels>1) mask_reg<-paste0(w_path,"data/",project,"/masks/", mask_reg)
-if(length(mask_pred)>0) mask_pred<-paste0(w_path,"data/",project,"/masks/", mask_pred)
+# # Check and refine masks
+# if(n_levels>1) mask_reg<-paste0(w_path,"data/",project,"/masks/", mask_reg)
+# if(length(mask_pred)>0) mask_pred<-paste0(w_path,"data/",project,"/masks/", mask_pred)
 
-# Save settings
-rm(settings, parameters, values, i)
-save.image(paste0(w_path,"tmp/",project,"/settings/nsdm-settings.RData"))
+# # Save settings
+# rm(settings, parameters, values, i)
+# save.image(paste0(w_path,"tmp/",project,"/settings/nsdm-settings.RData"))
 
-print(paste0("N-SDM settings defined"))
+# print(paste0("N-SDM settings defined"))
 
 ### =========================================================================
 ### B- Prepare covariate data
 ### =========================================================================
 # Set lib path
-.libPaths(lib_path)
+.libPaths("/cluster/home/anadde/Rpackages/")
 
 # Load nsdm package
 require(nsdm)
 library(pbmcapply)
 
-rds_f=rev(readLines("/cluster/work/eawag/p01002/nsdm/scripts/nsdm-project/main/main.txt"))
+# rds_f=rev(readLines("/cluster/work/eawag/p01002/nsdm/scripts/nsdm-project/main/main.txt"))
+rds_f=list.files("/cluster/work/eawag/p01002/nsdm/data/nsdm-project/covariates/reg/bioclim/chclim25/future", full.names=T, pattern=".rds", recursive=T)
 
 result <- pbmclapply(rds_f, function(x){
     fst_f <- sub("\\.rds$", ".fst", x)

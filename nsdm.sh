@@ -103,6 +103,7 @@ echo "Retrieving main paths..."
 wp=$(get_value "w_path")    # Working path
 sop=$(get_value "scr_path")  # Scratch output path
 svp=$(get_value "svp_path")  # Saving output path
+rlibs=$(get_value "lib_path")  # Saving output path
 
 # Retrieve project name
 echo "Retrieving project name..."
@@ -495,7 +496,7 @@ rsync -a --exclude-from="$wp/tmp/$project/settings/tmp/exclfiles.txt" $sop/outpu
 echo "Outputs synced to saving location."
 done
 
-# Aggregations
+# Aggregation and Plotting jobs submission for NCPs
 aggregation_job() {
     local NCP=$1
     local job_name="agg_$NCP"
@@ -517,11 +518,28 @@ aggregation_job() {
     echo "Aggregation job for NCP group $NCP has been submitted."
 }
 
-# Aggregations
+# Plotting job submission for NCP
+plotting_job() {
+    local NCP=$1
+    local job_name="plot_agg_$NCP"
+    local log_dir="./logs"
+    local output_path="$svp/outputs/$project/NCPs/${NCP}"
+    local plot_output_path="$svp/outputs/$project/plots/NCPs/${NCP}"
+	local lib_path="$rlibs"
+    local job_command="Rscript aggregates_plots.R \"$lib_path\" \"$output_path\" \"$plot_output_path\""
+
+    mkdir -p "$plot_output_path"
+    mkdir -p "$log_dir"
+
+    echo "Starting plotting for NCP group: $NCP"
+    submit_job "$job_name" "4G" "01:00:00" 4 1 "$job_command" "" "$log_dir"
+    echo "Plotting job for NCP group $NCP has been submitted."
+}
+
+# Aggregations and plotting
 cd "$wp/scripts/$project/main/5_aggregator/"
 
-# Inform that we are starting the aggregation process
-echo "Starting the aggregation process..."
+echo "Starting the aggregation and plotting process..."
 
 # Get list of group NCPs by removing file extensions from files in the groups folder
 NCPS=($(ls "$wp/scripts/$project/main/5_aggregator/groups" | sed 's/\.[^.]*$//'))
@@ -532,14 +550,16 @@ SCENARIOS=$(awk -F'_' '{print $1}' "$wp/scripts/$project/main/auxil/simulation_c
 # Define the time periods from 2020 to 2060, incrementing by 5
 PERIODS=$(seq 2020 5 2060)
 
-# Define paths
+# Define required additional paths
 reference_raster_path="$wp/scripts/$project/main/5_aggregator/reference_raster.tif"
 input_path="$svp/outputs/$project/d15_ensembles-fut/reg/covariate"
 
-# Loop through each NCP group and submit jobs
+# Loop through each NCP group and submit both aggregation and plotting jobs
 for NCP in "${NCPS[@]}"; do
     aggregation_job "$NCP"
+    plotting_job "$NCP"
 done
+echo "All aggregation and plotting jobs for NCP groups have been submitted."
 
 # Inform that nsdm.sh is completed
-echo "Finished."
+echo "nsdm Finished."
