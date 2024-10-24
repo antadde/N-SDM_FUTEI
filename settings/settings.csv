@@ -1,13 +1,14 @@
 parameter;value;group;details
 project;nsdm-project;0_global;name of the N-SDM project
+new_sess;TRUE;is this a new N-SDM session? (if FALSE, allows to skip the steps already done)
 w_path;/cluster/work/eawag/p01002/nsdm/;0_global;path to working directory
 scr_path;/cluster/scratch/anadde/;0_global;path to scratch directory
 svp_path;/cluster/project/eawag/p01002/nsdm_save/;0_general;path to saving directory
 lib_path;/cluster/home/anadde/Rpackages/;0_global;path to R libraries directory
 clear_sop;TRUE;0_global;clear the scratch directory before starting a new run? (TRUE or FALSE)
 n_levels;2;0_global;"number of nested level(s) (1=GLO; 2=GLO+REG)"
-n_spe;5;1_speciesdata;total number of species evaluated
-n_mx_spe;25;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
+n_spe;255;1_speciesdata;total number of species evaluated
+n_mx_spe;255;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
 forced_species;forced.csv;1_speciesdata;[optional] name of the .csv file stored in the /scripts/project/main/settings folder containing the names of species to be modelled (one per row)
 pa_po_reg;po;1_speciesdata;presence only (po) or presence absence (pa) for regional data
 pa_po_glo;po;1_speciesdata;presence only (po) or presence absence (pa) for global data
@@ -37,7 +38,7 @@ sel_met;GLM;3_covariate selection;"univariate ranking method used for collineari
 cor_cut;0.7;3_covariate selection;Pearson correlation coefficient cutoff threshold used for collinearity filtering
 max_thre;12;3_covariate selection;maximum possible number of covariates in a single model
 param_grid;param-grid.xlsx;4_modelling;name of the .xlsx file stored in the /scripts/project/main/settings folder containing the grid for hyperparameter tunning
-mod_algo;c('glm','gam','max','rf','gbm') ;4_modelling;"name(s) of the modelling algorithms evaluated. Available options include ""glm"", ""gam"", ""max"", ""rf"", ""gbm"" and ""esm"""
+mod_algo;c('glm', 'gam', 'rf');4_modelling;"name(s) of the modelling algorithms evaluated. Available options include ""glm"", ""gam"", ""max"", ""rf"", ""gbm"" and ""esm"""
 ncov_esm;5;4_modelling_esm;"[if ""esm"" included in mod_algo] total number of covariates evaluated in the esm framework"
 comb_esm;2;4_modelling_esm;"[if ""esm"" included in mod_algo] number of covariates combined in each esm"
 best_thre_esm;0.5;4_modelling_esm;"[if ""esm"" included in mod_algo] cutoff threshold value for ""best_met"" under which a model is discarded from the esm set"
@@ -53,7 +54,7 @@ mask_pred;ch_mask_terr_gwn07_lakes_50.rds;5_ensembling;[optional] binary (0-1) .
 do_proj;TRUE;6_projections;do future/alternative projections? (TRUE or FALSE)
 proj_scenarios;c('rcp26','rcp45', 'rcp85');6_projections;"names of the future/alternative scenarios evaluated for projections (must match with covariate folder names; see Appendix S1: Text S2 for details)"
 proj_periods;c('2020','2025','2030','2035','2040','2045','2050','2055','2060');6_projections;"names of the future/alternative periods evaluated for projections (must match with covariate folder names; see Appendix S1: Text S2 for details)"
-rsync_exclude;d1_covsels,d2_models,d6_preds,d10_nested-ensembles,d11_nested-ensembles-cv,d13_preds-fut,d14_maps-fut,d17_nested-ensembles-fut,d18_nested-ensembles-cv-fut,aggr_maps;7_rsyncsaving;"names of the output folders (no spaces between names) to be excluded when moving the scratch files to the saving directory; see Appendix S1: Text S5 for details on the output folder names. The default exclusion settings, along with the covariate nesting strategy, should provide you with all the material you need for in-depth analyses. Note that the final models are included by default, even if the d2_models folder is in the exclusion list (only models fitted during the hyperparameter tuning step will be excluded)"
+rsync_exclude;d1_covsels,d2_models,d6_preds,d7_maps,d10_nested-ensembles,d11_nested-ensembles-cv,d13_preds-fut,d14_maps-fut,d17_nested-ensembles-fut,d18_nested-ensembles-cv-fut,aggr_maps,d19_sacct;7_rsyncsaving;"names of the output folders (no spaces between names) to be excluded when moving the scratch files to the saving directory; see Appendix S1: Text S5 for details on the output folder names. The default exclusion settings, along with the covariate nesting strategy, should provide you with all the material you need for in-depth analyses. Note that the final models are included by default, even if the d2_models folder is in the exclusion list (only models fitted during the hyperparameter tuning step will be excluded)"
 sess_own;anadde;8_HPC;HPC session owner
 account;aguisan_valpar;8_HPC;HPC account
 partition;cpu;8_HPC;HPC partition
@@ -88,10 +89,10 @@ fut_B_m;3G;8_HPC;fut_B requested memory
 fut_B_t;00-00:15;8_HPC;fut_B requested time
 fut_B_c;1;8_HPC;fut_B requested cores
 fut_C_m;10G;8_HPC;fut_C requested memory
-fut_C_t;00-00:30;8_HPC;fut_C requested time
+fut_C_t;00-01:30;8_HPC;fut_C requested time
 fut_C_c;8;8_HPC;fut_C requested cores
 fut_D_m;3G;8_HPC;fut_D requested memory
-fut_D_t;00-01:00;8_HPC;fut_D requested time
+fut_D_t;00-01:30;8_HPC;fut_D requested time
 fut_D_c;1;8_HPC;fut_D requested cores
 end_A_m;15G;8_HPC;end_A requested memory
 end_A_t;00-00:15;8_HPC;end_A requested time

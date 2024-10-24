@@ -33,7 +33,9 @@ ncores<-as.numeric(Sys.getenv('SLURM_CPUS_PER_TASK'))
 
 # SBATCH param
 args<-eval(parse(text=args))
-arrayID<-eval(parse(text=arrayID))
+task_id <- as.numeric(args[1])
+part_start <- as.numeric(args[2])
+part_end <- as.numeric(args[3])
 
 # Target species
 species<-readRDS(paste0(w_path,"tmp/",project,"/settings/tmp/species-list-run.rds"))
@@ -54,15 +56,13 @@ pers<-proj_periods
 simus<-readLines(paste0(w_path,"scripts/",project,"/main/auxil/simulation_combis.txt"))
 
 # SBATCH array
-# array<-expand.grid(nesting=nesting_methods, model=models, species=species, scenarios=simus)
-array<-expand.grid(nesting=nesting_methods, species=species, scenarios=simus)
+array<-expand.grid(nesting=nesting_methods, species=species, scenarios=simus[part_start:part_end])
 array[c("scenar_lulc", "scenar_clim")] <- do.call(rbind, strsplit(as.character(array$scenarios), "_"))
-ispi_name <- array[arrayID,"species"]
-# model_name <- array[arrayID,"model"]
-nesting_method <- array[arrayID,"nesting"]
-scenar<-array[arrayID,"scenarios"]
-scenar_lulc<-array[arrayID,"scenar_lulc"]
-scenar_clim<-array[arrayID,"scenar_clim"]
+ispi_name <- array[task_id,"species"]
+nesting_method <- array[task_id,"nesting"]
+scenar<-array[task_id,"scenarios"]
+scenar_lulc<-array[task_id,"scenar_lulc"]
+scenar_clim<-array[task_id,"scenar_clim"]
 
 for(model_name in models){
 for (per in pers){

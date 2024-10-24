@@ -30,7 +30,9 @@ require(nsdm)
 ### =========================================================================
 # SBATCH param
 args<-eval(parse(text=args))
-arrayID<-eval(parse(text=arrayID))
+task_id <- as.numeric(args[1])
+part_start <- as.numeric(args[2])
+part_end <- as.numeric(args[3])
 
 # Target species
 species<-readRDS(paste0(w_path,"tmp/",project,"/settings/tmp/species-list-run.rds"))
@@ -42,18 +44,13 @@ scenars<-proj_scenarios
 nesting_methods<-nesting_methods
 
 # Target simulations for future predictions
-simus<-readLines(paste0(w_path,"scripts/",project,"/main/auxil/simulation_combis.txt"))
+simus<-readLines(paste0(w_path,"scripts/",project,"/main/auxil/simulation_combis.txt"))[part_start:part_end]
 
 # SBATCH array
-# array<-expand.grid(nesting=nesting_methods, species=species, scenarios=simus)
-# array[c("scenar_lulc", "scenar_clim")] <- do.call(rbind, strsplit(as.character(array$scenarios), "_"))
 array<-expand.grid(nesting=nesting_methods, species=species)
-ispi_name <- array[arrayID,"species"]
-nesting_method <- array[arrayID,"nesting"]
-# scenar<-array[arrayID,"scenarios"]
-# scenar_lulc<-array[arrayID,"scenar_lulc"]
+ispi_name <- array[task_id,"species"]
+nesting_method <- array[task_id,"nesting"]
 scenars_lulc<-unique(do.call(rbind,strsplit(as.character(simus), "_"))[,1])
-# scenar_clim<-array[arrayID,"scenar_clim"]
 
 # Target period for future predictions
 pers<-proj_periods
@@ -104,54 +101,55 @@ ensemble_reg<-nsdm.ensemble(model_names= mod_algo, # models for ensembling
                            weighting=do_weighting,
                            weight_metric=weight_metric,
                            discthre=disc_thre)
+						   
+# File paths for each combination
+file_paths_maps <- file.path(scr_path, "outputs", project, "d14_maps-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
+file_paths_preds <- file.path(scr_path, "outputs", project, "d13_preds-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
 
-nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble<-as.data.frame(ensemble_reg$ensemble)
-# fwrite(df_ensemble, paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble.csv"))
+# Remove intermediate pred and map files
+unlink(file_paths_preds, recursive = TRUE, force = TRUE)
+unlink(file_paths_maps, recursive = TRUE, force = TRUE)
 
-nsdm.savemap(maps=ensemble_reg$ensemble_cv, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble_cv<-as.data.frame(ensemble_reg$ensemble_cv)
-# fwrite(df_ensemble_cv, paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/reg/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
+nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, format="tif", model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
+# nsdm.savemap(maps=ensemble_reg$ensemble_cv, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
 
 ### =========================================================================
 ### E- Combine REG and GLO predictions
 ### =========================================================================
 # E.1 "Multiply" nesting
-if(nesting_method=="multiply"){
-  # response
-  ensemble_glo<-readRDS(list.files(paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/glo/",scenar_lulc,"/",per,"/",ispi_name), pattern=".rds", full.names = TRUE))
-  ensemble_nested<-sqrt(ensemble_glo*ensemble_reg$ensemble)
-  names(ensemble_nested)<-names(ensemble_reg$ensemble)
-  # # cv
-  ensemble_glo_cv<-readRDS(list.files(paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/glo/",scenar_lulc,"/",per,"/",ispi_name), pattern=".rds", full.names = TRUE))
-  ensemble_nested_cv<-raster::mean(raster::stack(ensemble_reg$ensemble_cv, ensemble_glo_cv))
-  names(ensemble_nested_cv)<-names(ensemble_reg$ensemble_cv)
-  # Save
-nsdm.savemap(map=ensemble_nested, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble_nested<-as.data.frame(ensemble_nested)
-# fwrite(df_ensemble_nested, paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble.csv"))
+# if(nesting_method=="multiply"){
+  # # response
+  # ensemble_glo<-readRDS(list.files(paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/glo/",scenar_lulc,"/",per,"/",ispi_name), pattern=".rds", full.names = TRUE))
+  # ensemble_nested<-sqrt(ensemble_glo*ensemble_reg$ensemble)
+  # names(ensemble_nested)<-names(ensemble_reg$ensemble)
+  # # # cv
+  # ensemble_glo_cv<-readRDS(list.files(paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/glo/",scenar_lulc,"/",per,"/",ispi_name), pattern=".rds", full.names = TRUE))
+  # ensemble_nested_cv<-raster::mean(raster::stack(ensemble_reg$ensemble_cv, ensemble_glo_cv))
+  # names(ensemble_nested_cv)<-names(ensemble_reg$ensemble_cv)
+  # # Save
+# nsdm.savemap(map=ensemble_nested, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per))
+# # df_ensemble_nested<-as.data.frame(ensemble_nested)
+# # fwrite(df_ensemble_nested, paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble.csv"))
 
 
-nsdm.savemap(map=ensemble_nested_cv, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble_nested_cv<-as.data.frame(ensemble_nested_cv)
-# fwrite(df_ensemble_nested_cv, paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
-
-
-} 
+# # nsdm.savemap(map=ensemble_nested_cv, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per))
+# # df_ensemble_nested_cv<-as.data.frame(ensemble_nested_cv)
+# # fwrite(df_ensemble_nested_cv, paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
+# } 
 
 # E.2 "Covariate" nesting
-if(nesting_method=="covariate"){
-ensemble_nested<-ensemble_reg$ensemble
-ensemble_nested_cv<-ensemble_reg$ensemble_cv
-# Save
-nsdm.savemap(map=ensemble_nested, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble_nested<-as.data.frame(ensemble_nested)
-# fwrite(df_ensemble_nested, paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble.csv"))
+# if(nesting_method=="covariate"){
+# ensemble_nested<-ensemble_reg$ensemble
+# ensemble_nested_cv<-ensemble_reg$ensemble_cv
+# # Save
+# nsdm.savemap(map=ensemble_nested, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per))
+# # df_ensemble_nested<-as.data.frame(ensemble_nested)
+# # fwrite(df_ensemble_nested, paste0(scr_path,"/outputs/",project,"/d17_nested-ensembles-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble.csv"))
 
-nsdm.savemap(map=ensemble_nested_cv, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per))
-# df_ensemble_nested_cv<-as.data.frame(ensemble_nested_cv)
-# fwrite(df_ensemble_nested_cv, paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
-}
+# # nsdm.savemap(map=ensemble_nested_cv, species_name=ispi_name, save_path=paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per))
+# # df_ensemble_nested_cv<-as.data.frame(ensemble_nested_cv)
+# # fwrite(df_ensemble_nested_cv, paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
+# }
 
 }
 }

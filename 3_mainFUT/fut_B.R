@@ -45,10 +45,8 @@ scenars<-proj_scenarios
 pers<-proj_periods
 
 # SBATCH array
-# array<-expand.grid(species=species, scenarios=scenars)
 array<-expand.grid(species=species)
 ispi_name <- array[arrayID,"species"]
-# scenar<-array[arrayID,"scenarios"]
 
 for(scenar in scenars){
 for (per in pers){
@@ -94,14 +92,18 @@ ensemble_glo<-nsdm.ensemble(model_names= mod_algo,
                            weighting=do_weighting,
                            weight_metric=weight_metric, 
                            discthre=disc_thre)
+						   
+# File paths for each combination
+file_paths_maps <- file.path(scr_path, "outputs", project, "d14_maps-fut/glo", scenar, per, ispi_name)
+file_paths_preds <- file.path(scr_path, "outputs", project, "d13_preds-fut/glo", scenar, per, ispi_name)
 
-nsdm.savemap(maps=ensemble_glo$ensemble, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/glo/",scenar,"/",per))
-# df_ensemble<-as.data.frame(ensemble_glo$ensemble)
-# fwrite(df_ensemble, paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/glo/",scenar,"/",per,"/",ispi_name,"/",ispi_name,"_glo_",scenar,"_",per, "_ensemble.csv"))
+# Remove intermediate pred and map files
+unlink(file_paths_preds, recursive = TRUE, force = TRUE)
+unlink(file_paths_maps, recursive = TRUE, force = TRUE)
 
-nsdm.savemap(maps=ensemble_glo$ensemble_cv, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/glo/",scenar,"/",per))
-# df_ensemble_cv<-as.data.frame(ensemble_glo$ensemble_cv)
-# fwrite(df_ensemble_cv, paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/glo/",scenar,"/",per,"/",ispi_name,"/",ispi_name,"_glo_",scenar,"_",per, "_ensemble_cv.csv"))
+# Save maps
+nsdm.savemap(maps=ensemble_glo$ensemble, species_name=ispi_name, format="rds", model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/glo/",scenar,"/",per))
+# nsdm.savemap(maps=ensemble_glo$ensemble_cv, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/glo/",scenar,"/",per))
 }
 }
 
