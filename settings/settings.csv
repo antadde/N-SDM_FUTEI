@@ -1,6 +1,6 @@
 parameter;value;group;details
 project;nsdm-project;0_global;name of the N-SDM project
-new_sess;TRUE;is this a new N-SDM session? (if FALSE, allows to skip the steps already done)
+new_sess;FALSE;is this a new N-SDM session? (if FALSE, allows to skip the steps already done)
 w_path;/cluster/work/eawag/p01002/nsdm/;0_global;path to working directory
 scr_path;/cluster/scratch/anadde/;0_global;path to scratch directory
 svp_path;/cluster/project/eawag/p01002/nsdm_save/;0_general;path to saving directory
@@ -93,7 +93,7 @@ fut_C_t;00-01:30;8_HPC;fut_C requested time
 fut_C_c;8;8_HPC;fut_C requested cores
 fut_D_m;3G;8_HPC;fut_D requested memory
 fut_D_t;00-01:30;8_HPC;fut_D requested time
-fut_D_c;1;8_HPC;fut_D requested cores
+fut_D_c;10;8_HPC;fut_D requested cores
 end_A_m;15G;8_HPC;end_A requested memory
 end_A_t;00-00:15;8_HPC;end_A requested time
 end_A_c;1;8_HPC;end_A requested cores

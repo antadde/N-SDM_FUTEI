@@ -224,19 +224,23 @@ local job_name="pre_A_${ssl_id}"   # Use session ID for uniqueness
 local log_dir="./0_mainPRE/logs"
 local job_command="export OMP_NUM_THREADS=1; Rscript ./0_mainPRE/pre_A.R"
 
-# Check if pre_A has already been completed
+# Check if the job has already been completed
 if job_completed "$job_name"; then
-return 0  # Skip the job if it has been completed
+echo "$job_name has already been completed. Skipping..."
+return 0
 fi
+
+# Create logs directory if it doesn't exist
+mkdir -p "$log_dir"
 
 # Submit the job
 submit_job "$job_name" "$PRE_A_m" "$PRE_A_t" "$PRE_A_c" 1 "$job_command" "" "$log_dir"
 
-# Mark pre_A as completed if the job was successful
+# Check if the job was successful
 if [ $? -eq 0 ]; then
-create_checkpoint "$job_name" 1 "$ssl_id"  # Store a checkpoint with session ID
+create_checkpoint "$job_name"  # Mark as completed
 else
-echo "Error: $job_name submission failed."
+echo "Error in job: $job_name"
 exit 1
 fi
 }
@@ -717,19 +721,33 @@ fi
 cd "$wp/scripts/$project/main/4_mainEND"
 end_A_job
 
-# Permissions
-chmod -R 777 $wp/scripts/$project/main
+# Permissions and files sync
+job_name="sync_files_${ssl_id}_${i}"
 
-# Find and sync relevant model files
-cd "$sop/outputs/$project/"
-find d2_models/ -name '*glm.rds' -o -name '*gam.rds' -o -name '*rf.rds' -o -name '*max.rds' -o -name '*gbm.rds' -o -name '*esm.rds' > $wp/tmp/$project/settings/tmp/modfiles.txt
-rsync -a --files-from=$wp/tmp/$project/settings/tmp/modfiles.txt . $svp/outputs/$project
+# Check if the job has already been completed
+if job_completed "$job_name"; then 
+    echo "Job $job_name has already been completed. Skipping..."
+else
+    echo "Starting job $job_name..."
 
-# Generate exclusion list and sync excluding files
-echo $(awk -F ";" '$1 == "rsync_exclude" { print $2}' $wp/scripts/$project/main/settings/settings.csv) | sed 's/,/\n/g' > $wp/tmp/$project/settings/tmp/exclfiles.txt
-rsync -a --exclude-from="$wp/tmp/$project/settings/tmp/exclfiles.txt" $sop/outputs/$project/ $svp/outputs/$project
+    # Permissions
+    chmod -R 777 "$wp/scripts/$project/main"
 
-echo "Outputs synced to saving location."
+    # Find and sync relevant model files
+    cd "$sop/outputs/$project/"
+    find d2_models/ -name '*glm.rds' -o -name '*gam.rds' -o -name '*rf.rds' -o -name '*max.rds' -o -name '*gbm.rds' -o -name '*esm.rds' > "$wp/tmp/$project/settings/tmp/modfiles.txt"
+    rsync -a --files-from="$wp/tmp/$project/settings/tmp/modfiles.txt" . "$svp/outputs/$project"
+
+    # Generate exclusion list and sync excluding files
+    awk -F ";" '$1 == "rsync_exclude" { print $2 }' "$wp/scripts/$project/main/settings/settings.csv" | sed 's/,/\n/g' > "$wp/tmp/$project/settings/tmp/exclfiles.txt"
+    rsync -a --exclude-from="$wp/tmp/$project/settings/tmp/exclfiles.txt" "$sop/outputs/$project/" "$svp/outputs/$project"
+
+    echo "Outputs synced to saving location."
+
+    # Create a checkpoint after successful completion
+    create_checkpoint "$job_name"
+fi
+
 done
 
 # Aggregation and Plotting jobs submission for NCPs
@@ -739,46 +757,44 @@ aggregation_job() {
     local log_dir="./logs"
     local species_list_path="$wp/scripts/$project/main/5_aggregator/groups/${NCP}.txt"
     local output_path="$svp/outputs/$project/NCPs/${NCP}"
-    local job_command="python aggregator.py \"$species_list_path\" \"$input_path\" \"$output_path\" \"$reference_raster_path\" '$SCENARIOS' '$PERIODS' \"$NCP\""
+    local job_command="python aggregator.py \"$species_list_path\" \"$input_path\" \"$output_path\" \"$reference_raster_path\" \"$SCENARIOS\" \"$PERIODS\" \"$NCP\""
     
     mkdir -p "$output_path"
     mkdir -p "$log_dir"
     
     echo "Starting aggregation for NCP group: $NCP"
     submit_job "$job_name" "4G" "01:00:00" 10 1 "$job_command" "" "$log_dir"
-    echo "Aggregation job for NCP group $NCP has been submitted."
 }
 
 # Plotting job submission for NCP
 plotting_job() {
-local NCP=$1
-local job_name="plot_agg_$NCP"
-local log_dir="./logs"
-local output_path="$svp/outputs/$project/NCPs/${NCP}"
-local plot_output_path="$svp/outputs/$project/plots/NCPs/${NCP}"
-local lib_path="$rlibs"
-local job_command="Rscript aggregates_plots.R \"$lib_path\" \"$output_path\" \"$plot_output_path\""
+    local NCP=$1
+    local job_name="plot_agg_$NCP"
+    local log_dir="./logs"
+    local output_path="$svp/outputs/$project/NCPs/${NCP}"
+    local plot_output_path="$svp/outputs/$project/plots/NCPs/${NCP}"
+    local lib_path="$rlibs"
+    local job_command="Rscript aggregates_plots.R \"$lib_path\" \"$output_path\" \"$plot_output_path\""
 
-mkdir -p "$plot_output_path"
-mkdir -p "$log_dir"
+    mkdir -p "$plot_output_path"
+    mkdir -p "$log_dir"
 
-echo "Starting plotting for NCP group: $NCP"
-submit_job "$job_name" "4G" "01:00:00" 4 1 "$job_command" "" "$log_dir"
-echo "Plotting job for NCP group $NCP has been submitted."
+    echo "Starting plotting for NCP group: $NCP"
+    submit_job "$job_name" "4G" "01:00:00" 4 1 "$job_command" "" "$log_dir"
 }
 
-# Aggregations and plotti
+# Aggregations and plotting process
 cd "$wp/scripts/$project/main/5_aggregator/"
 
 echo "Starting the aggregation and plotting process..."
 
-# Get list of group NCPs by removing file extensions from files in the groups folder
+# Get list of group NCPs
 NCPS=($(ls "$wp/scripts/$project/main/5_aggregator/groups" | sed 's/\.[^.]*$//'))
 
 # Extract SCENARIOS from the simulation_combis.txt file
 SCENARIOS=$(awk -F'_' '{print $1}' "$wp/scripts/$project/main/auxil/simulation_combis.txt")
 
-# Define the time periods from 2020 to 2060, incrementing by 5
+# Define the time periods from 2020 to 2060 incrementing by 5
 PERIODS=$(seq 2020 5 2060)
 
 # Define required additional paths
@@ -787,8 +803,9 @@ input_path="$svp/outputs/$project/d15_ensembles-fut/reg/covariate"
 
 # Loop through each NCP group and submit both aggregation and plotting jobs
 for NCP in "${NCPS[@]}"; do
-aggregation_job "$NCP"
-# plotting_job "$NCP"
+    aggregation_job "$NCP"
+    chmod -R 777 "$svp/outputs/$project/NCPs/${NCP}"
+    # plotting_job "$NCP"
 done
 echo "All aggregation and plotting jobs for NCP groups have been submitted."
 

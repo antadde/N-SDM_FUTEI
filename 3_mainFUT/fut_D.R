@@ -29,6 +29,7 @@ require(nsdm)
 ### B- Definitions
 ### =========================================================================
 # SBATCH param
+ncores<-as.numeric(Sys.getenv('SLURM_CPUS_PER_TASK'))
 args<-eval(parse(text=args))
 task_id <- as.numeric(args[1])
 part_start <- as.numeric(args[2])
@@ -55,62 +56,62 @@ scenars_lulc<-unique(do.call(rbind,strsplit(as.character(simus), "_"))[,1])
 # Target period for future predictions
 pers<-proj_periods
 
-for(scenar_lulc in scenars_lulc){
-for (per in pers){
+# for(scenar_lulc in scenars_lulc){
+# for (per in pers){
 
-cat(paste('Ready for mapping and ensembling', scenar_lulc, per, 'future REG predictions obtained for', ispi_name, 'under', nesting_method, 'nesting method...\n', sep=" "))
+# cat(paste('Ready for mapping and ensembling', scenar_lulc, per, 'future REG predictions obtained for', ispi_name, 'under', nesting_method, 'nesting method...\n', sep=" "))
 
-### =========================================================================
-### C- Save prediction raster
-### =========================================================================
-for(i in 1:length(mod_algo)){
-# Load raw prediction data
-model_name<-mod_algo[i]
-pred_path<-paste0(scr_path,"/outputs/",project,"/d13_preds-fut/reg/",nesting_method,"/",scenar_lulc,"/",per)
-full_pred_path<-paste0(paste(pred_path, ispi_name, model_name, sep="/"))
-pred_file<-list.files(full_pred_path, pattern=".rds", full.names=TRUE)
-pred<-readRDS(pred_file)
+# ### =========================================================================
+# ### C- Save prediction raster
+# ### =========================================================================
+# for(i in 1:length(mod_algo)){
+# # Load raw prediction data
+# model_name<-mod_algo[i]
+# pred_path<-paste0(scr_path,"/outputs/",project,"/d13_preds-fut/reg/",nesting_method,"/",scenar_lulc,"/",per)
+# full_pred_path<-paste0(paste(pred_path, ispi_name, model_name, sep="/"))
+# pred_file<-list.files(full_pred_path, pattern=".rds", full.names=TRUE)
+# pred<-readRDS(pred_file)
 
-# Predict 
-map_i<-nsdm.map(template=pred$template,
-                nona_ix=pred$nona_ix, 
-                species_name=ispi_name,
-				model_name=model_name,
-				level="reg",
-				scenar_name=scenar_lulc,
-				period_name=per,
-				nesting_name=nesting_method,
-                pred=pred$ndata_bck) 
+# # Predict 
+# map_i<-nsdm.map(template=pred$template,
+                # nona_ix=pred$nona_ix, 
+                # species_name=ispi_name,
+				# model_name=model_name,
+				# level="reg",
+				# scenar_name=scenar_lulc,
+				# period_name=per,
+				# nesting_name=nesting_method,
+                # pred=pred$ndata_bck) 
 
-# Save
-nsdm.savemap(maps=map_i, species_name=ispi_name, model_name=model_name, format="rds", save_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
-cat(paste0(model_name,' predictions saved \n'))
-}
+# # Save
+# nsdm.savemap(maps=map_i, species_name=ispi_name, model_name=model_name, format="rds", save_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
+# cat(paste0(model_name,' predictions saved \n'))
+# }
 
-### =========================================================================
-### D- Ensemble predictions
-### =========================================================================
-ensemble_reg<-nsdm.ensemble(model_names= mod_algo, # models for ensembling
-                           species_name=ispi_name,
-						   level="reg",
-						   scenar_name=scenar_lulc,
-				           period_name=per,
-				           nesting_name=nesting_method,
-                           map_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per),
-                           score_path=paste0(scr_path,"/outputs/",project,"/d3_evals/reg/", nesting_method),
-                           weighting=do_weighting,
-                           weight_metric=weight_metric,
-                           discthre=disc_thre)
+# ### =========================================================================
+# ### D- Ensemble predictions
+# ### =========================================================================
+# ensemble_reg<-nsdm.ensemble(model_names= mod_algo, # models for ensembling
+                           # species_name=ispi_name,
+						   # level="reg",
+						   # scenar_name=scenar_lulc,
+				           # period_name=per,
+				           # nesting_name=nesting_method,
+                           # map_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per),
+                           # score_path=paste0(scr_path,"/outputs/",project,"/d3_evals/reg/", nesting_method),
+                           # weighting=do_weighting,
+                           # weight_metric=weight_metric,
+                           # discthre=disc_thre)
 						   
-# File paths for each combination
-file_paths_maps <- file.path(scr_path, "outputs", project, "d14_maps-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
-file_paths_preds <- file.path(scr_path, "outputs", project, "d13_preds-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
+# # File paths for each combination
+# file_paths_maps <- file.path(scr_path, "outputs", project, "d14_maps-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
+# file_paths_preds <- file.path(scr_path, "outputs", project, "d13_preds-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
 
-# Remove intermediate pred and map files
-unlink(file_paths_preds, recursive = TRUE, force = TRUE)
-unlink(file_paths_maps, recursive = TRUE, force = TRUE)
+# # Remove intermediate pred and map files
+# unlink(file_paths_preds, recursive = TRUE, force = TRUE)
+# unlink(file_paths_maps, recursive = TRUE, force = TRUE)
 
-nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, format="tif", model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
+# nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, format="tif", model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
 # nsdm.savemap(maps=ensemble_reg$ensemble_cv, species_name=ispi_name, model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d16_ensembles-cv-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
 
 ### =========================================================================
@@ -151,8 +152,70 @@ nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, format="tif", m
 # # fwrite(df_ensemble_nested_cv, paste0(scr_path,"/outputs/",project,"/d18_nested-ensembles-cv-fut/",nesting_method,"/",scenar_lulc,"/",per,"/",ispi_name,"/",ispi_name,"_reg_",nesting_method,"_",scenar_lulc,"_",per, "_ensemble_cv.csv"))
 # }
 
-}
+# }
+# }
+
+# cat(paste0('GLO and REG predictions nested and saved \n'))
+# cat(paste0('Finished!\n'))
+
+# Define a function to process a single scenar_lulc
+process_scenar_lulc <- function(scenar_lulc) {
+  for (per in pers) {
+    cat(paste('Ready for mapping and ensembling', scenar_lulc, per, 'future REG predictions obtained for', ispi_name, 'under', nesting_method, 'nesting method...\n', sep=" "))
+    
+    ### =========================================================================
+    ### C- Save prediction raster
+    ### =========================================================================
+    for(i in 1:length(mod_algo)){
+      # Load raw prediction data
+      model_name<-mod_algo[i]
+      pred_path<-paste0(scr_path,"/outputs/",project,"/d13_preds-fut/reg/",nesting_method,"/",scenar_lulc,"/",per)
+      full_pred_path<-paste0(paste(pred_path, ispi_name, model_name, sep="/"))
+      pred_file<-list.files(full_pred_path, pattern=".rds", full.names=TRUE)
+      pred<-readRDS(pred_file)
+
+      # Predict 
+      map_i<-nsdm.map(template=pred$template,
+                      nona_ix=pred$nona_ix, 
+                      species_name=ispi_name,
+                      model_name=model_name,
+                      level="reg",
+                      scenar_name=scenar_lulc,
+                      period_name=per,
+                      nesting_name=nesting_method,
+                      pred=pred$ndata_bck) 
+
+      # Save
+      nsdm.savemap(maps=map_i, species_name=ispi_name, model_name=model_name, format="rds", save_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
+      cat(paste0(model_name,' predictions saved \n'))
+    }
+
+    ### =========================================================================
+    ### D- Ensemble predictions
+    ### =========================================================================
+    ensemble_reg<-nsdm.ensemble(model_names= mod_algo, # models for ensembling
+                               species_name=ispi_name,
+                               level="reg",
+                               scenar_name=scenar_lulc,
+                               period_name=per,
+                               nesting_name=nesting_method,
+                               map_path=paste0(scr_path,"/outputs/",project,"/d14_maps-fut/reg/",nesting_method,"/",scenar_lulc,"/",per),
+                               score_path=paste0(scr_path,"/outputs/",project,"/d3_evals/reg/", nesting_method),
+                               weighting=do_weighting,
+                               weight_metric=weight_metric,
+                               discthre=disc_thre)
+
+    # File paths for each combination
+    file_paths_maps <- file.path(scr_path, "outputs", project, "d14_maps-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
+    file_paths_preds <- file.path(scr_path, "outputs", project, "d13_preds-fut/reg", nesting_method, scenar_lulc, per, ispi_name)
+
+    # Remove intermediate pred and map files
+    unlink(file_paths_preds, recursive = TRUE, force = TRUE)
+    unlink(file_paths_maps, recursive = TRUE, force = TRUE)
+
+    nsdm.savemap(maps=ensemble_reg$ensemble, species_name=ispi_name, format="tif", model_name=NULL, save_path=paste0(scr_path,"/outputs/",project,"/d15_ensembles-fut/reg/",nesting_method,"/",scenar_lulc,"/",per))
+  }
 }
 
-cat(paste0('GLO and REG predictions nested and saved \n'))
-cat(paste0('Finished!\n'))
+# Use mclapply to parallelize the function over scenars_lulc
+mclapply(scenars_lulc, process_scenar_lulc, mc.cores = ncores)
