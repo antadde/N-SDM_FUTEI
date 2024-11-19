@@ -7,8 +7,8 @@ svp_path;/cluster/project/eawag/p01002/nsdm_save/;0_general;path to saving direc
 lib_path;/cluster/home/anadde/Rpackages/;0_global;path to R libraries directory
 clear_sop;TRUE;0_global;clear the scratch directory before starting a new run? (TRUE or FALSE)
 n_levels;2;0_global;"number of nested level(s) (1=GLO; 2=GLO+REG)"
-n_spe;255;1_speciesdata;total number of species evaluated
-n_mx_spe;255;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
+n_spe;10000;1_speciesdata;total number of species evaluated
+n_mx_spe;3;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
 forced_species;forced.csv;1_speciesdata;[optional] name of the .csv file stored in the /scripts/project/main/settings folder containing the names of species to be modelled (one per row)
 pa_po_reg;po;1_speciesdata;presence only (po) or presence absence (pa) for regional data
 pa_po_glo;po;1_speciesdata;presence only (po) or presence absence (pa) for global data
@@ -58,7 +58,7 @@ rsync_exclude;d1_covsels,d2_models,d6_preds,d7_maps,d10_nested-ensembles,d11_nes
 sess_own;anadde;8_HPC;HPC session owner
 account;aguisan_valpar;8_HPC;HPC account
 partition;cpu;8_HPC;HPC partition
-pre_A_m;10G;8_HPC;pre_A requested memory
+pre_A_m;50G;8_HPC;pre_A requested memory
 pre_A_t;00-01:15;8_HPC;pre_A requested time
 pre_A_c;10;8_HPC;pre_A requested cores
 pre_B_m;10G;8_HPC;pre_B requested memory

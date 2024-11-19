@@ -309,8 +309,8 @@ done
 clear_sop=$(get_value "clear_sop")
 if [ "$clear_sop" = "TRUE" ] && [ "$new_sess" = "TRUE" ]; then
 echo "Clearing scratch output and temporary directories..."
-rm -r "$sop/outputs/$project/*" 2>/dev/null || true
-rm -r "$sop/tmp/$project/*" 2>/dev/null || true
+rm -r "$sop/outputs/$project/" 2>/dev/null || true
+rm -r "$sop/tmp/$project/" 2>/dev/null || true
 fi
 
 # Retrieve n_levels and do_proj values from settings.csv
