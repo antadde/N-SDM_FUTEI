@@ -8,7 +8,7 @@ lib_path;/cluster/home/anadde/Rpackages/;0_global;path to R libraries directory
 clear_sop;TRUE;0_global;clear the scratch directory before starting a new run? (TRUE or FALSE)
 n_levels;2;0_global;"number of nested level(s) (1=GLO; 2=GLO+REG)"
 n_spe;10000;1_speciesdata;total number of species evaluated
-n_mx_spe;3;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
+n_mx_spe;2;1_speciesdata;maximum number of species evaluated at the same time for a single N-SDM run (useful to prevent scratch saturation)
 forced_species;forced.csv;1_speciesdata;[optional] name of the .csv file stored in the /scripts/project/main/settings folder containing the names of species to be modelled (one per row)
 pa_po_reg;po;1_speciesdata;presence only (po) or presence absence (pa) for regional data
 pa_po_glo;po;1_speciesdata;presence only (po) or presence absence (pa) for global data
@@ -94,7 +94,7 @@ fut_C_c;8;8_HPC;fut_C requested cores
 fut_D_m;3G;8_HPC;fut_D requested memory
 fut_D_t;00-01:30;8_HPC;fut_D requested time
 fut_D_c;10;8_HPC;fut_D requested cores
-end_A_m;15G;8_HPC;end_A requested memory
+end_A_m;35G;8_HPC;end_A requested memory
 end_A_t;00-00:15;8_HPC;end_A requested time
 end_A_c;1;8_HPC;end_A requested cores
 args;commandArgs(trailingOnly = TRUE);8_HPC;command arguments, not supposed to be modified

@@ -763,7 +763,7 @@ aggregation_job() {
     mkdir -p "$log_dir"
     
     echo "Starting aggregation for NCP group: $NCP"
-    submit_job "$job_name" "4G" "01:00:00" 10 1 "$job_command" "" "$log_dir"
+    submit_job "$job_name" "15G" "05:00:00" 10 1 "$job_command" "" "$log_dir"
 }
 
 # Plotting job submission for NCP
